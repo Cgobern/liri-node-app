@@ -18,30 +18,29 @@ if(process.argv.length >= 4)//this allows any return with more than one word to 
 }
 
 // Passing in 'command' arguement to get back which function to execute (ex: twitter will callback my tweets)
-switch(command) {
-	//Used to get tweets
-	case 'my-tweets':
-	twitter();
-	break;
-	
-	//Used to get spotify songs
-	case 'spotify-this-song':
-	spotifySong();
-	break;
+function commandChoice(){
+  switch(command) {
+  	//Used to get tweets
+  	case 'my-tweets':
+  	twitter();
+  	break;
+  	
+  	//Used to get spotify songs
+  	case 'spotify-this-song':
+  	spotifySong();
+  	break;
 
-	//Used to get movies 
-	case 'movie-this':
-	movie();
-	break;
+  	//Used to get movies 
+  	case 'movie-this':
+  	movie();
+  	break;
 
-	//Used to display whatever command is in the random.txt file 
-	case 'do-what-it-says':
-	liriDoThis();
-	break;
-
-	default:
-	break;
-}
+  	//Used to display whatever command is in the random.txt file 
+  	case 'do-what-it-says':
+  	liriDoThis();
+  	break;
+  }
+} 
 //Twitter
 function twitter(){
 	//Allows us to use the twitter npm
@@ -156,3 +155,16 @@ function movie(){
     }
 }
 
+function liriDoThis(){
+  fs.readFile('./random.txt','utf-8',function(err,data){
+    if(err){
+      console.log(err);
+    }else{
+     var data = data.split(',');
+    command = data[0];
+    title = data[1];
+    }
+    commandChoice();
+  })
+}
+commandChoice();
